@@ -153,3 +153,8 @@ CREATE TABLE assignments (
 
 ## Demo Video
 [Projenin demo videosunu buradan izleyebilirsiniz](https://youtu.be/C_IFGi8uevM) 
+
+## Projeyi canlıda çalıştırırken admin kullanıcısı olarak giriş yapmak için:
+- E-posta: admin@gmail.com
+- Şifre: 000
+
