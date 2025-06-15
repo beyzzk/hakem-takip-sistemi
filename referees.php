@@ -6,7 +6,6 @@ if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
     exit;
 }
-
 $stmt = $pdo->query("SELECT * FROM referees ORDER BY id DESC");
 $referees = $stmt->fetchAll();
 ?>
