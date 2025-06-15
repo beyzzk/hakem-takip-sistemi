@@ -83,35 +83,69 @@ Bu proje, belirli bir admin tarafından futbol maçlarına hakem atamalarının 
 - Var olan hakemlerin listesi
 ![hakem-listesi](img/hakem_listesi.png)  
 
-- Kullanıcının yalnızca atanmış oldugu maçların listesini gördüğü ekran
-![kullanici-maclari](img/kullanici_maclari.png)  
+- Tüm maçların listelendiği ekran  
+![maclar](img/tum_maclar.png)
 
-- Adminin maç ataması yaptığı ekran  
+- Admin tarafından atanmış maçların listelendiği ekran  
 ![mac-atamasi](img/mac_atamalari.png)  
 
-- Tüm maçların listelendiği ekran  
-![maclar](img/tum_maclar.png)  
+- Kullanıcının yalnızca kendisine atanmış maçların listesini gördüğü ekran
+![kullanici-maclari](img/kullanici_maclari.png)  
 
 
 ## 🚀 Kurulum
 
-1. **Veritabanını oluşturun**
-   - `database.sql` dosyasını içeri aktarın (örneğin phpMyAdmin ile).
-   - Tablolar: `users`, `referees`, `matches`, `assignments`
+1. **Gerekli Programları Kurun**
+    - XAMPP (PHP + MySQL barındırır) → PHP ve MySQL çalıştırmak için
 
-2. **Proje klasörünü sunucunuza yerleştirin**
-   - XAMPP, MAMP ya da canlı bir Apache sunucusu kullanabilirsiniz.
-   - Klasörü `htdocs/` içine koymayı unutmayın (XAMPP için).
+2. **Proje dosyalarını yerleştirin**
+   - Bu proje dosyalarını .zip olarak indirin veya GitHub’dan klonlayın.
+   - hakem-sistemi adında bir klasöre çıkarın.
+   - Bu klasörü XAMPP kurulumundaki htdocs klasörünün içine atın. Örnek yol: C:\xampp\htdocs\hakem-sistemi
 
-3. **Veritabanı bağlantısını ayarlayın**
-   - `db.php` dosyasında gerekli veritabanı kullanıcı adı ve şifre bilgilerini kendi sisteminize göre güncelleyin:
-     ```php
-     $pdo = new PDO("mysql:host=localhost;dbname=hakem_sistemi;charset=utf8", "root", "");
-     ```
+3. **XAMPP'ı başlatın**
+    - XAMPP Control Panel’i açın.
+    - Apache ve MySQL servislerini başlatın.
 
-4. **Projeyi çalıştırın**
-   - Tarayıcıya `http://localhost/hakem_sistemi/login.php` yazarak giriş yapabilirsiniz.
+4. **Veritabanını oluşturun**
+    - Tarayıcıda http://localhost/phpmyadmin adresine gidin.
+    - Sol menüden Yeni'ye tıklayın ve şu ismi verin: hakem_takip
+    - Ardından aşağıdaki SQL komutlarını çalıştırarak tabloları oluşturun.  
 
-5. **Admin kullanıcı oluşturun**
-   - `register.php` üzerinden kayıt olduktan sonra `users` tablosundan ilgili kullanıcının `role` değerini `admin` olarak güncelleyin.
+``` sql 
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(100),
+  email VARCHAR(100) UNIQUE,
+  password VARCHAR(255),
+  role ENUM('admin', 'referee') DEFAULT 'referee'
+);
+
+CREATE TABLE referees (
+  user_id INT PRIMARY KEY,
+  name VARCHAR(100),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE matches (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  match_name VARCHAR(255),
+  match_date DATE,
+  match_time TIME,
+  location VARCHAR(255)
+);
+
+CREATE TABLE assignments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  match_id INT,
+  referee_id INT,
+  assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE,
+  FOREIGN KEY (referee_id) REFERENCES users(id) ON DELETE CASCADE
+); 
+```
+
+5. **Uygulamayı başlatın**
+   - Tarayıcıya `http://localhost/hakem_takip/register.php` yazarak kayıt ol ekranına gidebilirsiniz.
+
 
