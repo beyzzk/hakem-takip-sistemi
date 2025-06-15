@@ -19,13 +19,13 @@ if (!isset($_SESSION["user_id"])) {
 
     <div class="mt-3">
         <?php if ($_SESSION["role"] === 'admin'): ?>
-            <a href="referees.php" class="btn btn-secondary">Hakemleri Listele</a>
+            <a href="referees.php" class="btn btn-danger">Hakemleri Listele</a>
             <a href="add_match.php" class="btn btn-primary">Maç Ekle</a>
             <a href="matches.php" class="btn btn-secondary">Maçları Listele</a>
             <a href="assign_match.php" class="btn btn-warning">Maç Atama Ekranı</a>
             <a href="view_assignments.php" class="btn btn-secondary">Atamaları Listele</a>
         <?php else: ?>
-            <a href="referees.php" class="btn btn-secondary">Hakemleri Listele</a>
+            <a href="referees.php" class="btn btn-danger">Hakemleri Listele</a>
             <a href="matches.php" class="btn btn-secondary">Maçları Listele</a>
             <a href="view_assignments.php" class="btn btn-secondary">Atamaları Listele</a>
             <a href="my_matches.php" class="btn btn-primary">Atandığım Maçlar</a>
