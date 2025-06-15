@@ -100,8 +100,8 @@ Bu proje, belirli bir admin tarafından futbol maçlarına hakem atamalarının 
 
 2. **Proje dosyalarını yerleştirin**
    - Bu proje dosyalarını .zip olarak indirin veya GitHub’dan klonlayın.
-   - hakem-sistemi adında bir klasöre çıkarın.
-   - Bu klasörü XAMPP kurulumundaki htdocs klasörünün içine atın. Örnek yol: C:\xampp\htdocs\hakem-sistemi
+   - hakem_takip adında bir klasöre çıkarın.
+   - Bu klasörü XAMPP kurulumundaki htdocs klasörünün içine atın. Örnek yol: C:\xampp\htdocs\hakem_takip
 
 3. **XAMPP'ı başlatın**
     - XAMPP Control Panel’i açın.
@@ -114,38 +114,42 @@ Bu proje, belirli bir admin tarafından futbol maçlarına hakem atamalarının 
 
 ``` sql 
 CREATE TABLE users (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(100),
-  email VARCHAR(100) UNIQUE,
-  password VARCHAR(255),
-  role ENUM('admin', 'referee') DEFAULT 'referee'
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'referee') DEFAULT 'referee'
 );
 
 CREATE TABLE referees (
-  user_id INT PRIMARY KEY,
-  name VARCHAR(100),
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE matches (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  match_name VARCHAR(255),
-  match_date DATE,
-  match_time TIME,
-  location VARCHAR(255)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    match_name VARCHAR(100) NOT NULL,
+    match_date DATE NOT NULL,
+    match_time TIME NOT NULL,
+    location VARCHAR(255)
 );
 
 CREATE TABLE assignments (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  match_id INT,
-  referee_id INT,
-  assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE,
-  FOREIGN KEY (referee_id) REFERENCES users(id) ON DELETE CASCADE
-); 
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    match_id INT NOT NULL,
+    referee_id INT NOT NULL,
+    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE,
+    FOREIGN KEY (referee_id) REFERENCES users(id) ON DELETE CASCADE
+);
 ```
 
 5. **Uygulamayı başlatın**
    - Tarayıcıya `http://localhost/hakem_takip/register.php` yazarak kayıt ol ekranına gidebilirsiniz.
 
 
+## Demo Video
+[Projenin demo videosunu buradan izleyebilirsiniz](https://youtu.be/C_IFGi8uevM) 

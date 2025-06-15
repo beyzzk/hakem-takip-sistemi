@@ -21,7 +21,6 @@ $referees = $stmt->fetchAll();
 <body class="bg-light">
 <div class="container mt-5">
     <h3>Hakem Listesi</h3>
-    <a href="add_referee.php" class="btn btn-primary mb-3">Yeni Hakem Ekle</a>
     <a href="dashboard.php" class="btn btn-secondary mb-3">Geri Dön</a>
 
     <table class="table table-striped table-bordered">
